@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Cornhub — premium corn photos, memes, facts, and kernel-powered entertainment." />
+  <title>Cornhub 🌽 Premium Corn Content</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="#top" aria-label="Cornhub home">
+      <span class="logo-corn">Corn</span><span class="logo-hub">hub</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#featured">Featured</a>
+      <a href="#memes">Memes</a>
+      <a href="#facts">Facts</a>
+      <a href="#upload">Upload</a>
+    </nav>
+    <button id="cornModeBtn" class="small-btn" type="button">🌽 Corn Mode</button>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <span class="eyebrow">100% VEGETABLE CONTENT</span>
+        <h1>Fresh. Hot.<br><span>Perfectly Corny.</span></h1>
+        <p>The internet’s premier destination for majestic cobs, kernel culture, and dangerously corny memes.</p>
+        <div class="hero-actions">
+          <a class="primary-btn" href="#featured">▶ Watch Corn</a>
+          <a class="secondary-btn" href="#memes">Fresh Kernels</a>
+        </div>
+      </div>
+      <div class="hero-cob" aria-hidden="true">
+        <div class="leaf leaf-left"></div>
+        <div class="cob">
+          <div class="kernels" id="heroKernels"></div>
+        </div>
+        <div class="leaf leaf-right"></div>
+      </div>
+    </section>
+
+    <section class="ticker" aria-label="Corn categories">
+      <div class="ticker-track">
+        <span>🌽 SWEET CORN</span><span>🍿 POPCORN</span><span>🌈 GLASS GEM</span><span>🌱 BABY CORN</span><span>🔥 GRILLED CORN</span><span>😂 CORN MEMES</span>
+        <span>🌽 SWEET CORN</span><span>🍿 POPCORN</span><span>🌈 GLASS GEM</span><span>🌱 BABY CORN</span><span>🔥 GRILLED CORN</span><span>😂 CORN MEMES</span>
+      </div>
+    </section>
+
+    <section id="featured" class="section-wrap">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">TRENDING NOW</span>
+          <h2>Featured Corn</h2>
+        </div>
+        <button id="shuffleBtn" class="small-btn" type="button">Shuffle Cobs</button>
+      </div>
+      <div id="cornGrid" class="card-grid"></div>
+    </section>
+
+    <section class="cotd-section">
+      <div class="cotd-card">
+        <div>
+          <span class="eyebrow">DAILY FEATURE</span>
+          <h2>Corn of the Day</h2>
+          <h3 id="cornOfDayName">Golden Majesty</h3>
+          <p id="cornOfDayText">A confident cob with excellent symmetry and undeniable main-character energy.</p>
+          <button id="newCornBtn" class="primary-btn" type="button">Show Another Cob</button>
+        </div>
+        <div id="cornOfDayArt" class="cotd-art" aria-hidden="true">🌽</div>
+      </div>
+    </section>
+
+    <section id="memes" class="section-wrap">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">ABSOLUTE KERNELS</span>
+          <h2>Corn Memes</h2>
+        </div>
+      </div>
+      <div class="meme-grid">
+        <article class="meme-card yellow">
+          <span class="meme-emoji">🌽</span>
+          <p>Nobody:</p>
+          <p>Absolutely nobody:</p>
+          <strong>Corn: “I’m all ears.”</strong>
+        </article>
+        <article class="meme-card dark">
+          <span class="meme-label">LIVE FOOTAGE</span>
+          <span class="meme-emoji huge">🍿</span>
+          <strong>Me watching drama<br>I said I wouldn’t get involved in</strong>
+        </article>
+        <article class="meme-card green">
+          <span class="meme-emoji">🧠</span>
+          <p>Therapist: Cornhub isn’t real.</p>
+          <strong>Cornhub:</strong>
+          <span class="meme-emoji huge">🌽</span>
+        </article>
+        <article class="meme-card cream">
+          <span class="meme-label">PREMIUM CONTENT</span>
+          <strong class="giant-text">ONLY<br>KERNELS</strong>
+          <p>Subscribe for exclusive cobtent.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="facts" class="facts-section">
+      <div class="facts-copy">
+        <span class="eyebrow">EDUCATIONAL, SORT OF</span>
+        <h2>Kernel Knowledge</h2>
+        <p id="factText">Corn is grown on every continent except Antarctica.</p>
+        <button id="factBtn" class="secondary-btn" type="button">Give Me Another Fact</button>
+      </div>
+      <div class="fact-number"><span id="factIndex">01</span>/08</div>
+    </section>
+
+    <section id="upload" class="section-wrap">
+      <div class="upload-panel">
+        <div class="upload-copy">
+          <span class="eyebrow">COMMUNITY HARVEST</span>
+          <h2>Upload Your Corn</h2>
+          <p>This demo form does not send files anywhere yet, but it is fully styled and ready to connect later.</p>
+        </div>
+        <form id="uploadForm">
+          <label>
+            Corn name
+            <input type="text" name="cornName" placeholder="e.g. Sir Shucks-a-Lot" required />
+          </label>
+          <label>
+            Sweetness rating
+            <input type="range" name="sweetness" min="1" max="10" value="8" />
+          </label>
+          <label>
+            Corn picture
+            <input type="file" name="cornPhoto" accept="image/*" />
+          </label>
+          <button class="primary-btn" type="submit">Shuck It</button>
+          <p id="formMessage" class="form-message" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="logo footer-logo" href="#top"><span class="logo-corn">Corn</span><span class="logo-hub">hub</span></a>
+    <p>© 2026 Cornhub. 100% corn. 0% porn. Stay corny.</p>
+    <p class="footer-hint">Press <kbd>C</kbd> for a kernel storm.</p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>

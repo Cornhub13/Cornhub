@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0b0b" />
+  <meta name="description" content="Cornhub — a clean, all-ages parody streaming page for premium corn photos, memes, and facts." />
+  <title>Cornhub — Premium Corn Content</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #090909;
+  --panel: #151515;
+  --panel-2: #1c1c1c;
+  --orange: #f6a21a;
+  --orange-2: #ffb22e;
+  --text: #f5f5f5;
+  --muted: #a5a5a5;
+  --line: rgba(255,255,255,.10);
+  --radius: 14px;
+  --shadow: 0 24px 60px rgba(0,0,0,.42);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--bg);
+  font-family: Inter, system-ui, sans-serif;
+  overflow-x: hidden;
+}
+body::selection { background: var(--orange); color: #111; }
+a { color: inherit; text-decoration: none; }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+.page-glow { position: fixed; inset: 0; pointer-events: none; z-index: -1; background: radial-gradient(circle at 85% 10%, rgba(246,162,26,.08), transparent 28%); }
+
+.site-header {
+  height: 68px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  padding: 0 5vw;
+  background: rgba(9,9,9,.86);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(18px);
+}
+.brand { display: inline-flex; align-items: center; font-family: Oswald, Impact, sans-serif; font-size: 2rem; line-height: 1; letter-spacing: -.04em; }
+.brand b { margin-left: 3px; padding: 4px 8px 5px; color: #111; background: var(--orange); border-radius: 5px; }
+.site-header nav { display: flex; gap: 25px; }
+.site-header nav a { font-size: .9rem; color: #d0d0d0; font-weight: 650; transition: color .2s ease; }
+.site-header nav a:hover { color: var(--orange); }
+.header-actions { margin-left: auto; display: flex; gap: 9px; }
+.icon-btn, .mode-btn, .text-btn, .category-strip button, .search-row button {
+  border: 0; color: white; background: transparent; font-weight: 700;
+}
+.icon-btn { width: 40px; height: 40px; border-radius: 50%; background: #222; font-size: 1.35rem; }
+.mode-btn { padding: 10px 14px; border-radius: 8px; background: #222; }
+.icon-btn:hover, .mode-btn:hover { background: #303030; }
+
+.search-drawer { max-height: 0; overflow: hidden; padding: 0 5vw; background: #111; border-bottom: 1px solid transparent; transition: max-height .3s ease, padding .3s ease; }
+.search-drawer.open { max-height: 160px; padding-top: 20px; padding-bottom: 22px; border-bottom-color: var(--line); }
+.search-drawer label { display: block; margin-bottom: 8px; color: var(--muted); font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .11em; }
+.search-row { display: flex; gap: 10px; }
+.search-row input { width: min(720px, 100%); padding: 13px 15px; color: white; background: #202020; border: 1px solid #343434; border-radius: 8px; outline: none; }
+.search-row input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(246,162,26,.12); }
+.search-row button { padding: 0 16px; border-radius: 8px; background: #292929; }
+
+.hero {
+  min-height: 670px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  align-items: center;
+  gap: 40px;
+  padding: 78px 7vw 70px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(7,7,7,.99) 0%, rgba(8,8,8,.91) 44%, rgba(8,8,8,.35) 100%),
+    radial-gradient(circle at 78% 40%, rgba(246,162,26,.23), transparent 28%),
+    linear-gradient(145deg, #121212, #242015);
+}
+.hero::after { content:""; position:absolute; left:0; right:0; bottom:0; height:120px; background:linear-gradient(transparent,var(--bg)); pointer-events:none; }
+.hero-grain { position:absolute; inset:0; opacity:.12; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E"); }
+.hero-copy, .hero-visual { position: relative; z-index: 2; }
+.content-rating { display:inline-block; padding:7px 10px; border:1px solid rgba(255,255,255,.18); border-radius:5px; color:#ddd; font-size:.68rem; letter-spacing:.14em; font-weight:800; }
+.hero-kicker, .section-kicker { color: var(--orange); font-size: .78rem; text-transform: uppercase; letter-spacing: .16em; font-weight: 800; }
+.hero-kicker { margin: 24px 0 10px; }
+h1, h2 { font-family: Oswald, Impact, sans-serif; text-transform: uppercase; margin:0; }
+h1 { max-width: 750px; font-size: clamp(4.4rem, 8vw, 8rem); line-height: .88; letter-spacing: -.035em; }
+h1 em { color: var(--orange); font-style: normal; }
+.hero-description { max-width: 650px; color:#c7c7c7; font-size:1.05rem; line-height:1.72; }
+.hero-meta { display:flex; align-items:center; flex-wrap:wrap; gap:15px; color:#d2d2d2; font-size:.82rem; font-weight:700; }
+.hero-meta span:first-child { color:var(--orange); }
+.family-pill { padding:4px 8px; border-radius:4px; background:#2c2c2c; }
+.hero-actions { display:flex; gap:11px; margin-top:28px; }
+.btn { border:0; border-radius:8px; padding:13px 19px; display:inline-flex; justify-content:center; align-items:center; gap:8px; font-weight:800; transition:transform .2s ease, filter .2s ease, background .2s ease; }
+.btn:hover { transform:translateY(-2px); filter:brightness(1.08); }
+.btn-primary { color:#121212; background:var(--orange); }
+.btn-secondary { color:white; background:#2a2a2a; }
+
+.hero-visual { min-height:500px; display:grid; place-items:center; }
+.spotlight { position:absolute; width:440px; height:440px; border-radius:50%; background:radial-gradient(circle,rgba(255,193,61,.23),rgba(255,193,61,.02) 62%,transparent 70%); filter:blur(3px); }
+.corn-stage { position:relative; width:360px; height:500px; transform:rotate(12deg); filter:drop-shadow(0 35px 35px rgba(0,0,0,.55)); }
+.main-cob { position:absolute; left:95px; top:34px; width:185px; height:390px; z-index:3; padding:24px 20px; border-radius:50% 50% 42% 42%; background:linear-gradient(110deg,#ffd84c,#efa10b 72%,#a85f00); box-shadow:inset -17px -8px 30px rgba(125,62,0,.25); }
+.kernels { height:100%; display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+.kernel { border-radius:48%; background:linear-gradient(135deg,#fff6a0,#f4b41e 65%,#c97f00); box-shadow:inset -2px -3px 3px rgba(122,63,0,.23); }
+.corn-leaf { position:absolute; bottom:25px; width:190px; height:410px; z-index:2; border-radius:100% 0 100% 0; background:linear-gradient(150deg,#6a9e3a,#174c27 75%,#0f321d); }
+.leaf-one { left:8px; transform:rotate(-26deg); }
+.leaf-two { right:-16px; transform:scaleX(-1) rotate(-22deg); }
+.hero-badge { position:absolute; right:2%; bottom:12%; padding:13px 16px; display:flex; align-items:center; gap:10px; border:1px solid rgba(255,255,255,.14); border-radius:10px; background:rgba(22,22,22,.86); backdrop-filter:blur(10px); box-shadow:var(--shadow); }
+.hero-badge b { font-size:1.6rem; color:var(--orange); }
+.hero-badge span { max-width:100px; color:#ccc; font-size:.72rem; text-transform:uppercase; line-height:1.25; letter-spacing:.08em; }
+
+.category-strip { position:sticky; top:68px; z-index:40; display:flex; gap:10px; overflow-x:auto; padding:14px 5vw; background:rgba(12,12,12,.92); border-block:1px solid var(--line); backdrop-filter:blur(12px); scrollbar-width:none; }
+.category-strip::-webkit-scrollbar { display:none; }
+.category-strip button { flex:0 0 auto; padding:9px 14px; border-radius:18px; color:#c5c5c5; background:#202020; font-size:.82rem; transition:.2s ease; }
+.category-strip button:hover, .category-strip button.active { color:#111; background:var(--orange); }
+
+.content-section { max-width:1500px; margin:auto; padding:82px 5vw; }
+.section-title-row { display:flex; justify-content:space-between; align-items:end; gap:25px; margin-bottom:28px; }
+.section-kicker { margin:0 0 8px; }
+h2 { font-size:clamp(2.6rem,5vw,4.6rem); line-height:1; letter-spacing:-.025em; }
+.text-btn { color:#bbb; padding:10px 0; }
+.text-btn:hover { color:var(--orange); }
+.video-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:22px 16px; }
+.video-card { min-width:0; cursor:pointer; }
+.thumbnail { position:relative; aspect-ratio:16/9; display:grid; place-items:center; overflow:hidden; border-radius:10px; background:#1a1a1a; box-shadow:0 10px 30px rgba(0,0,0,.22); }
+.thumbnail::after { content:""; position:absolute; inset:0; background:linear-gradient(transparent 45%,rgba(0,0,0,.62)); }
+.thumb-emoji { position:relative; z-index:1; font-size:clamp(4.5rem,8vw,7rem); filter:drop-shadow(0 15px 18px rgba(0,0,0,.35)); transition:transform .35s cubic-bezier(.2,.8,.2,1); }
+.video-card:hover .thumb-emoji { transform:scale(1.12) rotate(3deg); }
+.play-overlay { position:absolute; z-index:3; width:52px; height:52px; display:grid; place-items:center; border-radius:50%; color:#111; background:rgba(246,162,26,.95); opacity:0; transform:scale(.78); transition:.22s ease; }
+.video-card:hover .play-overlay { opacity:1; transform:scale(1); }
+.duration { position:absolute; z-index:3; right:8px; bottom:7px; padding:3px 6px; border-radius:4px; color:white; background:rgba(0,0,0,.76); font-size:.7rem; font-weight:700; }
+.fresh-label { position:absolute; z-index:3; left:8px; top:8px; padding:4px 7px; border-radius:4px; color:#111; background:var(--orange); font-size:.62rem; letter-spacing:.08em; font-weight:900; }
+.video-info { padding-top:12px; }
+.video-info h3 { margin:0 0 7px; font-size:.98rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.video-meta { display:flex; gap:8px; color:var(--muted); font-size:.76rem; }
+.empty-state { color:var(--muted); text-align:center; padding:60px 0; }
+
+.feature-banner { max-width:1350px; min-height:410px; margin:20px auto 60px; padding:65px; display:grid; grid-template-columns:1.2fr .8fr; align-items:center; border:1px solid rgba(255,255,255,.09); border-radius:18px; overflow:hidden; background:radial-gradient(circle at 82% 45%,rgba(246,162,26,.26),transparent 24%),linear-gradient(125deg,#181818,#241d12); box-shadow:var(--shadow); }
+.feature-copy p { max-width:670px; color:#c4c4c4; line-height:1.7; }
+.feature-art { text-align:center; font-size:14rem; filter:drop-shadow(0 30px 28px rgba(0,0,0,.45)); transition:transform .4s ease; }
+.feature-art:hover { transform:rotate(7deg) scale(1.06); }
+
+.meme-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.meme-card { min-height:330px; padding:28px; border-radius:13px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; overflow:hidden; transition:transform .25s ease; }
+.meme-card:hover { transform:translateY(-7px); }
+.meme-card div { font-size:6rem; }
+.meme-card p { margin:5px 0; }
+.meme-card strong { font-size:1.12rem; line-height:1.4; }
+.meme-top { margin-bottom:auto; align-self:flex-start; font-size:.65rem; letter-spacing:.15em; font-weight:900; opacity:.66; }
+.meme-yellow { color:#151515; background:#f6b826; }
+.meme-dark { border:1px solid var(--line); background:#171717; }
+.meme-green { background:#215332; }
+.meme-cream { color:#161616; background:#f3ead1; }
+.only-kernels { margin:auto 0 18px; font:700 3.6rem/.88 Oswald,Impact,sans-serif; }
+
+.fact-panel { max-width:1350px; margin:30px auto 70px; padding:62px; display:grid; grid-template-columns:1fr auto; align-items:end; gap:40px; border-radius:18px; background:#234d2d; }
+.fact-text { max-width:900px; font-size:clamp(1.35rem,3vw,2.25rem); line-height:1.35; font-weight:700; }
+.fact-counter { font:700 6rem/1 Oswald,Impact,sans-serif; opacity:.38; }
+.fact-counter small { font-size:2rem; }
+.upload-card { display:grid; grid-template-columns:1fr 1fr; gap:60px; padding:50px; border:1px solid var(--line); border-radius:16px; background:var(--panel); }
+.upload-card > div p:last-child { max-width:590px; color:var(--muted); line-height:1.7; }
+form { display:grid; gap:14px; align-content:center; }
+input, select { width:100%; padding:14px 15px; color:white; border:1px solid #393939; border-radius:8px; background:#0d0d0d; outline:none; }
+input:focus, select:focus { border-color:var(--orange); }
+.form-message { min-height:22px; margin:0; color:var(--orange); font-weight:700; }
+
+footer { padding:55px 5vw; display:grid; justify-items:center; gap:8px; color:#949494; border-top:1px solid var(--line); text-align:center; }
+.footer-brand { margin-bottom:8px; }
+.footer-note { font-size:.8rem; }
+kbd { padding:2px 7px; color:white; background:#232323; border:1px solid #414141; border-bottom-width:3px; border-radius:5px; }
+.toast { position:fixed; left:50%; bottom:25px; z-index:300; padding:12px 17px; color:#111; background:white; border-radius:8px; font-weight:800; opacity:0; pointer-events:none; transform:translate(-50%,25px); transition:.25s ease; box-shadow:var(--shadow); }
+.toast.show { opacity:1; transform:translate(-50%,0); }
+.falling-corn { position:fixed; top:-65px; z-index:400; pointer-events:none; animation:fall linear forwards; }
+@keyframes fall { to { transform:translateY(115vh) rotate(760deg); } }
+.reveal { opacity:0; transform:translateY(18px); transition:opacity .7s ease,transform .7s ease; }
+.reveal.visible { opacity:1; transform:none; }
+body.corn-mode .video-card .thumbnail { box-shadow:0 0 0 2px var(--orange),0 15px 40px rgba(246,162,26,.16); }
+body.corn-mode { background-image:radial-gradient(rgba(246,162,26,.055) 1px,transparent 1px); background-size:20px 20px; }
+
+@media (max-width:1100px) {
+  .video-grid { grid-template-columns:repeat(3,1fr); }
+  .meme-grid { grid-template-columns:repeat(2,1fr); }
+  .hero { grid-template-columns:1fr; }
+  .hero-visual { position:absolute; right:-90px; bottom:-60px; opacity:.52; transform:scale(.83); }
+  .hero-copy { max-width:800px; }
+  .feature-banner { margin-inline:4vw; }
+  .fact-panel { margin-inline:4vw; }
+}
+@media (max-width:760px) {
+  .site-header nav { display:none; }
+  .site-header { padding-inline:18px; }
+  .brand { font-size:1.7rem; }
+  .mode-btn { font-size:.75rem; }
+  .hero { min-height:690px; padding:78px 24px 90px; }
+  h1 { font-size:4.2rem; }
+  .hero-description { font-size:.96rem; }
+  .hero-visual { right:-130px; bottom:-100px; transform:scale(.66); }
+  .hero-actions { flex-direction:column; align-items:stretch; max-width:320px; }
+  .category-strip { top:68px; padding-inline:18px; }
+  .content-section { padding:65px 20px; }
+  .video-grid { grid-template-columns:repeat(2,1fr); gap:20px 11px; }
+  .section-title-row { align-items:flex-start; flex-direction:column; }
+  .feature-banner { margin:10px 20px 50px; padding:38px 25px; grid-template-columns:1fr; }
+  .feature-art { font-size:9rem; }
+  .meme-grid { grid-template-columns:1fr; }
+  .fact-panel { margin:20px 20px 55px; padding:38px 25px; grid-template-columns:1fr; }
+  .fact-counter { font-size:4rem; }
+  .upload-card { grid-template-columns:1fr; gap:25px; padding:31px 22px; }
+}
+@media (max-width:430px) {
+  .video-grid { grid-template-columns:1fr; }
+  .thumbnail { aspect-ratio:16/9; }
+  h1 { font-size:3.5rem; }
+  .hero-meta { gap:9px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; }
+  .reveal { opacity:1; transform:none; }
+}
+
+</style>
+</head>
+<body>
+  <div class="page-glow" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Cornhub home">
+      <span>Corn</span><b>hub</b>
+    </a>
+
+    <nav aria-label="Main navigation">
+      <a href="#trending">Trending</a>
+      <a href="#categories">Categories</a>
+      <a href="#memes">Memes</a>
+      <a href="#facts">Facts</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-btn" id="searchToggle" type="button" aria-label="Open search">⌕</button>
+      <button class="mode-btn" id="cornModeBtn" type="button">Corn Mode</button>
+    </div>
+  </header>
+
+  <div class="search-drawer" id="searchDrawer">
+    <label for="searchInput">Search premium corn content</label>
+    <div class="search-row">
+      <input id="searchInput" type="search" placeholder="Try “popcorn”, “grilled”, or “meme”…" autocomplete="off" />
+      <button id="clearSearch" type="button">Clear</button>
+    </div>
+  </div>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-grain" aria-hidden="true"></div>
+      <div class="hero-copy reveal">
+        <span class="content-rating">ALL AGES • 100% VEGETABLE</span>
+        <p class="hero-kicker">Cornhub Original</p>
+        <h1>Premium<br><em>Corn Content</em></h1>
+        <p class="hero-description">Fresh cobs, dramatic harvests, buttery close-ups, and the internet’s corniest memes — carefully selected by the Kernel Council.</p>
+        <div class="hero-meta">
+          <span>★★★★★</span>
+          <span>2026</span>
+          <span>4 seasons</span>
+          <span class="family-pill">Family Friendly</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#trending"><span>▶</span> Browse Corn</a>
+          <button class="btn btn-secondary" id="randomCobBtn" type="button"><span>✦</span> Surprise Me</button>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal" aria-label="Illustrated ear of corn">
+        <div class="spotlight"></div>
+        <div class="corn-stage">
+          <div class="corn-leaf leaf-one"></div>
+          <div class="corn-leaf leaf-two"></div>
+          <div class="main-cob">
+            <div id="heroKernels" class="kernels"></div>
+          </div>
+        </div>
+        <div class="hero-badge"><b>#1</b><span>in vegetables today</span></div>
+      </div>
+    </section>
+
+    <section class="category-strip" id="categories" aria-label="Corn categories">
+      <button data-filter="all" class="active">All Corn</button>
+      <button data-filter="sweet">🌽 Sweet Corn</button>
+      <button data-filter="popcorn">🍿 Popcorn</button>
+      <button data-filter="grilled">🔥 Grilled</button>
+      <button data-filter="field">🌾 Cornfields</button>
+      <button data-filter="rainbow">🌈 Rainbow Corn</button>
+      <button data-filter="meme">😂 Memes</button>
+    </section>
+
+    <section id="trending" class="content-section reveal">
+      <div class="section-title-row">
+        <div>
+          <p class="section-kicker">Most watched this harvest</p>
+          <h2>Trending Cobs</h2>
+        </div>
+        <button class="text-btn" id="shuffleBtn" type="button">Shuffle harvest ↻</button>
+      </div>
+      <div id="cornGrid" class="video-grid"></div>
+      <p id="emptyState" class="empty-state" hidden>No matching cobs. The field may need watering.</p>
+    </section>
+
+    <section class="feature-banner reveal">
+      <div class="feature-copy">
+        <span class="content-rating">CORN OF THE DAY</span>
+        <h2 id="cornOfDayName">Golden Majesty</h2>
+        <p id="cornOfDayText">A confident cob with excellent symmetry and undeniable main-character energy.</p>
+        <div class="hero-meta"><span>98% fresh</span><span>Ultra Sweet</span><span>16 rows</span></div>
+        <button class="btn btn-primary" id="newCornBtn" type="button">Show Another Cob</button>
+      </div>
+      <div class="feature-art" id="cornOfDayArt" aria-hidden="true">🌽</div>
+    </section>
+
+    <section id="memes" class="content-section reveal">
+      <div class="section-title-row">
+        <div>
+          <p class="section-kicker">Comedy from the cob</p>
+          <h2>Fresh Corn Memes</h2>
+        </div>
+      </div>
+      <div class="meme-grid">
+        <article class="meme-card meme-yellow"><span class="meme-top">RELATABLE</span><div>🌽</div><p>Nobody:</p><p>Absolutely nobody:</p><strong>Corn: “I’m all ears.”</strong></article>
+        <article class="meme-card meme-dark"><span class="meme-top">LIVE FOOTAGE</span><div>🍿</div><strong>Me watching drama<br>I promised to avoid</strong></article>
+        <article class="meme-card meme-green"><span class="meme-top">BREAKING NEWS</span><div>🧈</div><strong>Local cob discovers butter.<br>Refuses to comment.</strong></article>
+        <article class="meme-card meme-cream"><span class="meme-top">PREMIUM COBTENT</span><strong class="only-kernels">ONLY<br>KERNELS</strong><p>Exclusive content. Zero subscription fee.</p></article>
+      </div>
+    </section>
+
+    <section id="facts" class="fact-panel reveal">
+      <div>
+        <p class="section-kicker">Kernel knowledge</p>
+        <h2>Did You Know?</h2>
+        <p class="fact-text" id="factText">Corn is grown on every continent except Antarctica.</p>
+        <button class="btn btn-secondary" id="factBtn" type="button">Another Fact</button>
+      </div>
+      <div class="fact-counter"><span id="factIndex">01</span><small>/08</small></div>
+    </section>
+
+    <section class="content-section reveal">
+      <div class="upload-card">
+        <div>
+          <p class="section-kicker">Community harvest</p>
+          <h2>Submit Your Cob</h2>
+          <p>Nominate a corn photo for inspection by the Kernel Council. This demo stays on your device and does not upload anything.</p>
+        </div>
+        <form id="uploadForm">
+          <input type="text" name="cornName" placeholder="Name your corn" required />
+          <select name="category" aria-label="Corn category">
+            <option>Sweet Corn</option><option>Popcorn</option><option>Grilled Corn</option><option>Rare Corn</option>
+          </select>
+          <button class="btn btn-primary" type="submit">Shuck It</button>
+          <p id="formMessage" class="form-message" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand footer-brand" href="#top"><span>Corn</span><b>hub</b></a>
+    <p>100% corn. 0% adult content. Stay corny.</p>
+    <p class="footer-note">Press <kbd>C</kbd> for a kernel storm.</p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script>
+const cornItems = [
+  { name:"Golden Hour Cob", category:"sweet", emoji:"🌽", bg:"linear-gradient(145deg,#7b3816,#e89520)", views:"1.2M views", age:"2 hours ago", duration:"8:14", fresh:true },
+  { name:"Popcorn Explosion in Slow Motion", category:"popcorn", emoji:"🍿", bg:"linear-gradient(145deg,#25204b,#9e547e)", views:"842K views", age:"5 hours ago", duration:"4:20" },
+  { name:"Perfect Grill Marks Compilation", category:"grilled", emoji:"🔥", bg:"linear-gradient(145deg,#1d1d1d,#8d3d1c)", views:"987K views", age:"Yesterday", duration:"12:06", fresh:true },
+  { name:"Glass Gem Rainbow Close-Up", category:"rainbow", emoji:"🌈", bg:"linear-gradient(145deg,#3b2768,#bd4f72)", views:"2.4M views", age:"1 day ago", duration:"6:33" },
+  { name:"A Very Cinematic Cornfield", category:"field", emoji:"🌾", bg:"linear-gradient(145deg,#8e7021,#1e4228)", views:"1.8M views", age:"2 days ago", duration:"18:49" },
+  { name:"Butter Application Masterclass", category:"sweet", emoji:"🧈", bg:"linear-gradient(145deg,#ad7a15,#4f3510)", views:"734K views", age:"3 days ago", duration:"9:41" },
+  { name:"Baby Corn, Massive Confidence", category:"sweet", emoji:"🌱", bg:"linear-gradient(145deg,#6f9c40,#153421)", views:"623K views", age:"4 days ago", duration:"5:12" },
+  { name:"Corn Says: I’m All Ears", category:"meme", emoji:"😂", bg:"linear-gradient(145deg,#a15d18,#e6b62d)", views:"551K views", age:"5 days ago", duration:"0:42" },
+  { name:"Kernel Macro Photography", category:"sweet", emoji:"🔎", bg:"linear-gradient(145deg,#a87313,#2c1e09)", views:"414K views", age:"1 week ago", duration:"7:07" },
+  { name:"Popcorn Bowl Transformation", category:"popcorn", emoji:"🥣", bg:"linear-gradient(145deg,#543120,#c98e45)", views:"1.1M views", age:"1 week ago", duration:"10:10" },
+  { name:"Midnight Cornfield Ambience", category:"field", emoji:"🌙", bg:"linear-gradient(145deg,#10162a,#2f5429)", views:"392K views", age:"2 weeks ago", duration:"1:00:00" },
+  { name:"The Legendary Double Cob", category:"meme", emoji:"🌽", bg:"linear-gradient(145deg,#40330d,#d59d13)", views:"3.2M views", age:"2 weeks ago", duration:"3:18", fresh:true }
+];
+
+const facts = [
+  "Corn is grown on every continent except Antarctica.",
+  "Each strand of corn silk connects to a single kernel.",
+  "Popcorn expands because water inside the kernel turns into steam.",
+  "Corn can appear yellow, white, red, blue, purple, and multicoloured.",
+  "A typical ear of corn has an even number of kernel rows.",
+  "Corn is used in foods, fuel, sweeteners, and biodegradable materials.",
+  "Maize was domesticated in southern Mexico thousands of years ago.",
+  "Baby corn is simply corn harvested before the cob matures."
+];
+
+const dailyCorn = [
+  ["Golden Majesty","A confident cob with excellent symmetry and undeniable main-character energy.","🌽"],
+  ["Popcorn Prime","Small, explosive, and ready for movie night at a moment’s notice.","🍿"],
+  ["Farmer’s Favourite","Dependable, photogenic, and suspiciously good at posing during sunset.","🌾"],
+  ["Butter Legend","Smooth, rich, and absolutely unwilling to apologise for the calories.","🧈"],
+  ["Spicy Kernel","Brings heat, drama, and grill marks to every family gathering.","🔥"]
+];
+
+const grid = document.getElementById("cornGrid");
+const emptyState = document.getElementById("emptyState");
+const toast = document.getElementById("toast");
+const searchInput = document.getElementById("searchInput");
+let activeCategory = "all";
+
+for (let i = 0; i < 77; i++) {
+  const kernel = document.createElement("span");
+  kernel.className = "kernel";
+  document.getElementById("heroKernels").appendChild(kernel);
+}
+
+function renderCards(items = cornItems) {
+  grid.innerHTML = items.map(item => `
+    <article class="video-card" tabindex="0" data-name="${item.name}">
+      <div class="thumbnail" style="background:${item.bg}">
+        ${item.fresh ? '<span class="fresh-label">FRESH</span>' : ''}
+        <span class="thumb-emoji">${item.emoji}</span>
+        <span class="play-overlay">▶</span>
+        <span class="duration">${item.duration}</span>
+      </div>
+      <div class="video-info">
+        <h3 title="${item.name}">${item.name}</h3>
+        <div class="video-meta"><span>${item.views}</span><span>•</span><span>${item.age}</span></div>
+      </div>
+    </article>`).join("");
+  emptyState.hidden = items.length !== 0;
+  document.querySelectorAll(".video-card").forEach(card => card.addEventListener("click", () => showToast(`${card.dataset.name} is premium still-image cobtent 🌽`)));
+}
+
+function filteredItems() {
+  const query = searchInput.value.trim().toLowerCase();
+  return cornItems.filter(item => (activeCategory === "all" || item.category === activeCategory) && item.name.toLowerCase().includes(query));
+}
+
+function refreshGrid() { renderCards(filteredItems()); }
+function shuffleArray(items) { return [...items].sort(() => Math.random() - .5); }
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(showToast.timer);
+  showToast.timer = setTimeout(() => toast.classList.remove("show"), 2100);
+}
+
+const searchDrawer = document.getElementById("searchDrawer");
+document.getElementById("searchToggle").addEventListener("click", () => {
+  searchDrawer.classList.toggle("open");
+  if (searchDrawer.classList.contains("open")) setTimeout(() => searchInput.focus(), 250);
+});
+searchInput.addEventListener("input", refreshGrid);
+document.getElementById("clearSearch").addEventListener("click", () => { searchInput.value = ""; refreshGrid(); searchInput.focus(); });
+
+document.querySelectorAll(".category-strip button").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".category-strip button").forEach(btn => btn.classList.remove("active"));
+    button.classList.add("active");
+    activeCategory = button.dataset.filter;
+    refreshGrid();
+    document.getElementById("trending").scrollIntoView({behavior:"smooth", block:"start"});
+  });
+});
+
+document.getElementById("shuffleBtn").addEventListener("click", () => {
+  renderCards(shuffleArray(filteredItems()));
+  showToast("Fresh cobs harvested 🌽");
+});
+
+document.getElementById("factBtn").addEventListener("click", () => {
+  const index = Math.floor(Math.random() * facts.length);
+  document.getElementById("factText").textContent = facts[index];
+  document.getElementById("factIndex").textContent = String(index + 1).padStart(2,"0");
+});
+
+function randomDailyCorn() {
+  const [name,text,art] = dailyCorn[Math.floor(Math.random() * dailyCorn.length)];
+  document.getElementById("cornOfDayName").textContent = name;
+  document.getElementById("cornOfDayText").textContent = text;
+  document.getElementById("cornOfDayArt").textContent = art;
+}
+document.getElementById("newCornBtn").addEventListener("click", randomDailyCorn);
+document.getElementById("randomCobBtn").addEventListener("click", () => {
+  randomDailyCorn();
+  document.querySelector(".feature-banner").scrollIntoView({behavior:"smooth",block:"center"});
+});
+
+document.getElementById("uploadForm").addEventListener("submit", event => {
+  event.preventDefault();
+  const name = new FormData(event.currentTarget).get("cornName");
+  document.getElementById("formMessage").textContent = `${name} is awaiting inspection by the Kernel Council.`;
+  event.currentTarget.reset();
+});
+
+function cornStorm() {
+  for (let i=0;i<30;i++) {
+    const corn=document.createElement("span");
+    corn.className="falling-corn";
+    corn.textContent=Math.random()>.18?"🌽":"🍿";
+    corn.style.left=`${Math.random()*100}vw`;
+    corn.style.fontSize=`${22+Math.random()*35}px`;
+    corn.style.animationDuration=`${2.2+Math.random()*2.7}s`;
+    corn.style.animationDelay=`${Math.random()*.65}s`;
+    document.body.appendChild(corn);
+    setTimeout(()=>corn.remove(),6000);
+  }
+  showToast("Kernel storm activated!");
+}
+
+document.addEventListener("keydown", event => {
+  if (event.key.toLowerCase()==="c" && !["INPUT","TEXTAREA"].includes(document.activeElement.tagName)) cornStorm();
+});
+
+document.getElementById("cornModeBtn").addEventListener("click", () => {
+  document.body.classList.toggle("corn-mode");
+  showToast(document.body.classList.contains("corn-mode") ? "Corn Mode: ON" : "Corn Mode: OFF");
+});
+
+const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+  if (entry.isIntersecting) entry.target.classList.add("visible");
+}), {threshold:.08});
+document.querySelectorAll(".reveal").forEach(element => observer.observe(element));
+
+renderCards();
+
+</script>
+</body>
+</html>
